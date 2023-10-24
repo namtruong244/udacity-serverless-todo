@@ -1,10 +1,12 @@
 import AWS from 'aws-sdk'
+import AWSXRay from 'aws-xray-sdk'
 import {createLogger} from '../utils/logger.mjs'
 
 const logger = createLogger('todosAccess')
 
 
-const docClient = new AWS.DynamoDB.DocumentClient()
+const XAWS = AWSXRay.captureAWS(AWS)
+const docClient = new XAWS.DynamoDB.DocumentClient()
 const todosTable = process.env.TODOS_TABLE
 const todosByUserIndex = process.env.TODOS_BY_USER_INDEX
 
